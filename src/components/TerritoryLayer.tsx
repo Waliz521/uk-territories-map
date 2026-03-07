@@ -173,7 +173,8 @@ function TerritoryGeoJson({
     const territory = areaToTerritory.get(
       normalizeName((feature.properties?.LAD13NM ?? feature.properties?.name ?? '') as string)
     )
-    const status = territory?.status ?? 'available'
+    // Areas in Excel: use their status color. Areas NOT in Excel: gray.
+    const status = territory?.status ?? 'unavailable'
     return styleForStatus(status)
   }
 
