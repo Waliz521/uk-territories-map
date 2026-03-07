@@ -4,7 +4,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { GeoJSON, useMap } from 'react-leaflet'
 import type { Feature, FeatureCollection } from 'geojson'
-import type { PathOptions } from 'leaflet'
+import type { PathOptions, Layer, LeafletEvent } from 'leaflet'
 import { loadEnglandWalesGeoJson } from '../utils/geojsonLoader'
 import { STATUS_COLORS } from '../data/statusColors'
 import { useMapContext } from '../context/MapContext'
@@ -169,7 +169,8 @@ function TerritoryGeoJson({
   openModal: () => void
   styleForStatus: (s: keyof typeof STATUS_COLORS) => PathOptions
 }) {
-  const styleFn = (feature: Feature) => {
+  const styleFn = (feature?: Feature) => {
+    if (!feature) return styleForStatus('unavailable')
     const territory = areaToTerritory.get(
       normalizeName((feature.properties?.LAD13NM ?? feature.properties?.name ?? '') as string)
     )
@@ -183,7 +184,7 @@ function TerritoryGeoJson({
       key={`${filters.territoryId}-${filters.status}`}
       data={filteredGeojson}
       style={styleFn}
-      onEachFeature={(feature, layer) => {
+      onEachFeature={(feature: Feature, layer: Layer) => {
         const name = feature.properties?.LAD13NM ?? feature.properties?.name ?? 'Unknown'
         layer.bindTooltip(name, {
           permanent: false,
@@ -196,14 +197,14 @@ function TerritoryGeoJson({
             selectTerritory(getTerritoryForFeature(feature, areaToTerritory))
             openModal()
           },
-          mouseover: (e) => {
-            const target = e.target
+          mouseover: (e: LeafletEvent) => {
+            const target = e.target as { setStyle: (s: PathOptions) => void; bringToFront: () => void }
             target.setStyle(HOVER_STYLE)
             target.bringToFront()
           },
-          mouseout: (e) => {
+          mouseout: (e: LeafletEvent) => {
             const baseStyle = styleFn(feature)
-            e.target.setStyle(baseStyle)
+            ;(e.target as { setStyle: (s: PathOptions) => void }).setStyle(baseStyle)
           },
         })
       }}
