@@ -1,0 +1,709 @@
+[
+  {
+    "name": "Kingston upon Thames",
+    "type": "Borough",
+    "region": "England",
+    "population": 172692,
+    "territory": "1"
+  },
+  {
+    "name": "Sutton",
+    "type": "Borough",
+    "region": "England",
+    "population": 214525,
+    "territory": "1"
+  },
+  {
+    "name": "Kensington and Chelsea",
+    "type": "Borough",
+    "region": "England",
+    "population": 144518,
+    "territory": "2"
+  },
+  {
+    "name": "Westminster",
+    "type": "Borough",
+    "region": "England",
+    "population": 211500,
+    "territory": "2"
+  },
+  {
+    "name": "Hammersmith and Fulham",
+    "type": "Borough",
+    "region": "England",
+    "population": 188687,
+    "territory": "3"
+  },
+  {
+    "name": "Blaenau Gwent",
+    "type": "Borough",
+    "region": "Wales",
+    "population": 67873,
+    "territory": ""
+  },
+  {
+    "name": "Richmond upon Thames",
+    "type": "Borough",
+    "region": "England",
+    "population": 196678,
+    "territory": "3"
+  },
+  {
+    "name": "Bridgend (Pen-y-bont ar Ogwr)",
+    "type": "Borough",
+    "region": "Wales",
+    "population": 145760,
+    "territory": ""
+  },
+  {
+    "name": "Camden",
+    "type": "Borough",
+    "region": "England",
+    "population": 218000,
+    "territory": "4"
+  },
+  {
+    "name": "Merton",
+    "type": "Borough",
+    "region": "England",
+    "population": 218500,
+    "territory": "5"
+  },
+  {
+    "name": "Islington",
+    "type": "Borough",
+    "region": "England",
+    "population": 223024,
+    "territory": "6"
+  },
+  {
+    "name": "Caerphilly (Caerffili)",
+    "type": "Borough",
+    "region": "Wales",
+    "population": 177000,
+    "territory": ""
+  },
+  {
+    "name": "Barking and Dagenham",
+    "type": "Borough",
+    "region": "England",
+    "population": 232747,
+    "territory": "7"
+  },
+  {
+    "name": "Bexley",
+    "type": "Borough",
+    "region": "England",
+    "population": 256434,
+    "territory": "8"
+  },
+  {
+    "name": "Cardiff (Caerdydd)",
+    "type": "County",
+    "region": "Wales",
+    "population": 383900,
+    "territory": "173"
+  },
+  {
+    "name": "Carmarthenshire (Sir Gaerfyrddin)",
+    "type": "County",
+    "region": "Wales",
+    "population": 190800,
+    "territory": ""
+  },
+  {
+    "name": "Ceredigion",
+    "type": "County",
+    "region": "Wales",
+    "population": 73050,
+    "territory": ""
+  },
+  {
+    "name": "Havering",
+    "type": "Borough",
+    "region": "England",
+    "population": 262000,
+    "territory": "9"
+  },
+  {
+    "name": "Conwy",
+    "type": "Borough",
+    "region": "Wales",
+    "population": 114891,
+    "territory": ""
+  },
+  {
+    "name": "Haringey",
+    "type": "Borough",
+    "region": "England",
+    "population": 264200,
+    "territory": "10"
+  },
+  {
+    "name": "Hackney",
+    "type": "Borough",
+    "region": "England",
+    "population": 266758,
+    "territory": "11"
+  },
+  {
+    "name": "Harrow",
+    "type": "Borough",
+    "region": "England",
+    "population": 270724,
+    "territory": "12"
+  },
+  {
+    "name": "Denbighshire (Sir Ddinbych)",
+    "type": "County",
+    "region": "Wales",
+    "population": 98200,
+    "territory": ""
+  },
+  {
+    "name": "Waltham Forest",
+    "type": "Borough",
+    "region": "England",
+    "population": 279700,
+    "territory": "13"
+  },
+  {
+    "name": "Greenwich",
+    "type": "Borough",
+    "region": "England",
+    "population": 299500,
+    "territory": "14"
+  },
+  {
+    "name": "Hounslow",
+    "type": "Borough",
+    "region": "England",
+    "population": 300000,
+    "territory": "15"
+  },
+  {
+    "name": "Lewisham",
+    "type": "Borough",
+    "region": "England",
+    "population": 301255,
+    "territory": "16"
+  },
+  {
+    "name": "Southwark",
+    "type": "Borough",
+    "region": "England",
+    "population": 314786,
+    "territory": "17"
+  },
+  {
+    "name": "Lambeth",
+    "type": "Borough",
+    "region": "England",
+    "population": 318000,
+    "territory": "18"
+  },
+  {
+    "name": "Redbridge",
+    "type": "Borough",
+    "region": "England",
+    "population": 321231,
+    "territory": "19"
+  },
+  {
+    "name": "Wandsworth",
+    "type": "Borough",
+    "region": "England",
+    "population": 327506,
+    "territory": "20"
+  },
+  {
+    "name": "Hillingdon",
+    "type": "Borough",
+    "region": "England",
+    "population": 329185,
+    "territory": "21"
+  },
+  {
+    "name": "Flintshire (Sir y Fflint)",
+    "type": "County",
+    "region": "Wales",
+    "population": 155867,
+    "territory": ""
+  },
+  {
+    "name": "Enfield",
+    "type": "Borough",
+    "region": "England",
+    "population": 330000,
+    "territory": "22"
+  },
+  {
+    "name": "Tower Hamlets",
+    "type": "Borough",
+    "region": "England",
+    "population": 331886,
+    "territory": "23"
+  },
+  {
+    "name": "Bromley",
+    "type": "Borough",
+    "region": "England",
+    "population": 335319,
+    "territory": "24"
+  },
+  {
+    "name": "Brent",
+    "type": "Borough",
+    "region": "England",
+    "population": 339800,
+    "territory": "25"
+  },
+  {
+    "name": "Gwynedd",
+    "type": "County",
+    "region": "Wales",
+    "population": 119400,
+    "territory": "174"
+  },
+  {
+    "name": "Ealing",
+    "type": "Borough",
+    "region": "England",
+    "population": 367100,
+    "territory": "26"
+  },
+  {
+    "name": "Newham",
+    "type": "Borough",
+    "region": "England",
+    "population": 375000,
+    "territory": "27"
+  },
+  {
+    "name": "Barnet",
+    "type": "Borough",
+    "region": "England",
+    "population": 389344,
+    "territory": "28"
+  },
+  {
+    "name": "Croydon",
+    "type": "Borough",
+    "region": "England",
+    "population": 390800,
+    "territory": "29"
+  },
+  {
+    "name": "Durham",
+    "type": "County",
+    "region": "England",
+    "population": 50000,
+    "territory": "35"
+  },
+  {
+    "name": "Northumberland",
+    "type": "County",
+    "region": "England",
+    "population": 331200,
+    "territory": "35"
+  },
+  {
+    "name": "Shropshire",
+    "type": "County",
+    "region": "England",
+    "population": 332500,
+    "territory": "41"
+  },
+  {
+    "name": "East Riding of Yorkshire",
+    "type": "County",
+    "region": "England",
+    "population": 355844,
+    "territory": "42"
+  },
+  {
+    "name": "Dorset",
+    "type": "County",
+    "region": "England",
+    "population": 390000,
+    "territory": "43"
+  },
+  {
+    "name": "Staffordshire",
+    "type": "County",
+    "region": "England",
+    "population": 1177578,
+    "territory": "101-103"
+  },
+  {
+    "name": "Isle of Anglesey (Ynys Môn)",
+    "type": "County",
+    "region": "Wales",
+    "population": 69291,
+    "territory": "174"
+  },
+  {
+    "name": "West Sussex",
+    "type": "County",
+    "region": "England",
+    "population": 915000,
+    "territory": "104-106"
+  },
+  {
+    "name": "Norfolk",
+    "type": "County",
+    "region": "England",
+    "population": 940359,
+    "territory": "107-109"
+  },
+  {
+    "name": "Berkshire",
+    "type": "County",
+    "region": "England",
+    "population": 992000,
+    "territory": "110-112"
+  },
+  {
+    "name": "Cheshire",
+    "type": "County",
+    "region": "England",
+    "population": 1139883,
+    "territory": "113-116"
+  },
+  {
+    "name": "Tyne and Wear",
+    "type": "County",
+    "region": "England",
+    "population": 1180000,
+    "territory": "117-120"
+  },
+  {
+    "name": "Hertfordshire",
+    "type": "County",
+    "region": "England",
+    "population": 1240000,
+    "territory": "121-124"
+  },
+  {
+    "name": "Surrey",
+    "type": "County",
+    "region": "England",
+    "population": 1248649,
+    "territory": "125-128"
+  },
+  {
+    "name": "South Yorkshire",
+    "type": "County",
+    "region": "England",
+    "population": 1430000,
+    "territory": "129-132"
+  },
+  {
+    "name": "Merseyside",
+    "type": "County",
+    "region": "England",
+    "population": 1470000,
+    "territory": "133-137"
+  },
+  {
+    "name": "Lancashire",
+    "type": "County",
+    "region": "England",
+    "population": 1600000,
+    "territory": "138-142"
+  },
+  {
+    "name": "Kent",
+    "type": "County",
+    "region": "England",
+    "population": 1931684,
+    "territory": "143-147"
+  },
+  {
+    "name": "Merthyr Tydfil (Merthyr Tudful)",
+    "type": "Borough",
+    "region": "Wales",
+    "population": 58972,
+    "territory": ""
+  },
+  {
+    "name": "Essex",
+    "type": "County",
+    "region": "England",
+    "population": 1900000,
+    "territory": "148-152"
+  },
+  {
+    "name": "Monmouthshire (Sir Fynwy)",
+    "type": "County",
+    "region": "Wales",
+    "population": 93886,
+    "territory": ""
+  },
+  {
+    "name": "Neath Port Talbot (Castell-nedd Port Talbot)",
+    "type": "Borough",
+    "region": "Wales",
+    "population": 143249,
+    "territory": ""
+  },
+  {
+    "name": "West Yorkshire",
+    "type": "County",
+    "region": "England",
+    "population": 2435236,
+    "territory": "153-158"
+  },
+  {
+    "name": "Newport (Casnewydd)",
+    "type": "Borough",
+    "region": "Wales",
+    "population": 159587,
+    "territory": ""
+  },
+  {
+    "name": "Greater Manchester",
+    "type": "County",
+    "region": "England",
+    "population": 3009664,
+    "territory": "159-164"
+  },
+  {
+    "name": "West Midlands",
+    "type": "County",
+    "region": "England",
+    "population": 3036605,
+    "territory": "165-172"
+  },
+  {
+    "name": "Hampshire",
+    "type": "County",
+    "region": "England",
+    "population": 1920959,
+    "territory": "30-34"
+  },
+  {
+    "name": "Isle of Wight",
+    "type": "County",
+    "region": "England",
+    "population": 142000,
+    "territory": "30-34"
+  },
+  {
+    "name": "Leicestershire",
+    "type": "County",
+    "region": "England",
+    "population": 1133921,
+    "territory": "36-37"
+  },
+  {
+    "name": "Rutland",
+    "type": "County",
+    "region": "England",
+    "population": 41400,
+    "territory": "36-37"
+  },
+  {
+    "name": "Pembrokeshire (Sir Benfro)",
+    "type": "County",
+    "region": "Wales",
+    "population": 125761,
+    "territory": ""
+  },
+  {
+    "name": "Powys",
+    "type": "County",
+    "region": "Wales",
+    "population": 135000,
+    "territory": ""
+  },
+  {
+    "name": "Gloucestershire",
+    "type": "County",
+    "region": "England",
+    "population": 669380,
+    "territory": "38-40"
+  },
+  {
+    "name": "Rhondda Cynon Taff",
+    "type": "Borough",
+    "region": "Wales",
+    "population": 241178,
+    "territory": ""
+  },
+  {
+    "name": "Herefordshire",
+    "type": "County",
+    "region": "England",
+    "population": 189900,
+    "territory": "38-40"
+  },
+  {
+    "name": "Bristol",
+    "type": "County",
+    "region": "England",
+    "population": 494400,
+    "territory": "45-46"
+  },
+  {
+    "name": "Cumbria",
+    "type": "County",
+    "region": "England",
+    "population": 510680,
+    "territory": "47-48"
+  },
+  {
+    "name": "Wiltshire",
+    "type": "County",
+    "region": "England",
+    "population": 523700,
+    "territory": "49-50"
+  },
+  {
+    "name": "East Sussex",
+    "type": "County",
+    "region": "England",
+    "population": 555500,
+    "territory": "51-52"
+  },
+  {
+    "name": "Buckinghamshire",
+    "type": "County",
+    "region": "England",
+    "population": 566700,
+    "territory": "53-55"
+  },
+  {
+    "name": "Cornwall",
+    "type": "County",
+    "region": "England",
+    "population": 570300,
+    "territory": "56-59"
+  },
+  {
+    "name": "Somerset",
+    "type": "County",
+    "region": "England",
+    "population": 1012934,
+    "territory": "60-62"
+  },
+  {
+    "name": "Worcestershire",
+    "type": "County",
+    "region": "England",
+    "population": 621360,
+    "territory": "63-66"
+  },
+  {
+    "name": "Warwickshire",
+    "type": "County",
+    "region": "England",
+    "population": 632200,
+    "territory": "67-70"
+  },
+  {
+    "name": "Swansea (Abertawe)",
+    "type": "Borough",
+    "region": "Wales",
+    "population": 251300,
+    "territory": ""
+  },
+  {
+    "name": "Torfaen (Tor-faen)",
+    "type": "Borough",
+    "region": "Wales",
+    "population": 94119,
+    "territory": ""
+  },
+  {
+    "name": "North Yorkshire",
+    "type": "County",
+    "region": "England",
+    "population": 1139960,
+    "territory": "71-73"
+  },
+  {
+    "name": "Cambridgeshire",
+    "type": "County",
+    "region": "England",
+    "population": 699573,
+    "territory": "74-76"
+  },
+  {
+    "name": "Vale of Glamorgan ( Bro Morgannwg)",
+    "type": "County",
+    "region": "Wales",
+    "population": 135743,
+    "territory": ""
+  },
+  {
+    "name": "Bedfordshire",
+    "type": "County",
+    "region": "England",
+    "population": 750000,
+    "territory": "77-79"
+  },
+  {
+    "name": "Oxfordshire",
+    "type": "County",
+    "region": "England",
+    "population": 763200,
+    "territory": "80-82"
+  },
+  {
+    "name": "Suffolk",
+    "type": "County",
+    "region": "England",
+    "population": 786231,
+    "territory": "83-86"
+  },
+  {
+    "name": "Lincolnshire",
+    "type": "County",
+    "region": "England",
+    "population": 1120749,
+    "territory": "87-89"
+  },
+  {
+    "name": "Northamptonshire",
+    "type": "County",
+    "region": "England",
+    "population": 814000,
+    "territory": "90-92"
+  },
+  {
+    "name": "Derbyshire",
+    "type": "County",
+    "region": "England",
+    "population": 1096526,
+    "territory": "93-95"
+  },
+  {
+    "name": "Devon",
+    "type": "County",
+    "region": "England",
+    "population": 1254506,
+    "territory": "96-98"
+  },
+  {
+    "name": "Nottinghamshire",
+    "type": "County",
+    "region": "England",
+    "population": 1188090,
+    "territory": "99-101"
+  },
+  {
+    "name": "Greater London",
+    "type": "County",
+    "region": "England",
+    "population": 9090000,
+    "territory": ""
+  },
+  {
+    "name": "Wrexham (Wrecsam)",
+    "type": "Borough",
+    "region": "Wales",
+    "population": 136149,
+    "territory": ""
+  }
+]

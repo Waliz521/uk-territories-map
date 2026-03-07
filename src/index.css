@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+/* Blossoming Care brand - warm rose to match logo */
+:root {
+  --brand-rose: #c76b7a;
+  --brand-rose-dark: #a85564;
+}
+
+body {
+  font-family: "Nunito", system-ui, sans-serif;
+}
+
+/* Territory tooltip - match app font and legend typography */
+.territory-tooltip {
+  font-family: "Nunito", system-ui, sans-serif !important;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
