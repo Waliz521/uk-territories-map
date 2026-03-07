@@ -17,14 +17,14 @@ export function TerritoryModal({ territory, open, onOpenChange }: TerritoryModal
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Overlay className="fixed inset-0 z-[2000] bg-black/40" />
-      <Dialog.Content className="fixed left-1/2 top-1/2 z-[2001] w-[90vw] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-6 shadow-xl">
+      <Dialog.Content className="fixed left-1/2 top-1/2 z-[2001] w-fit min-w-[280px] max-w-[90vw] -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-4 shadow-xl">
           <Dialog.Title className="text-lg font-semibold text-gray-900">
             {territory.areas.length > 1 ? `Territory ${territory.id}` : territory.areas[0]?.name ?? territory.id}
           </Dialog.Title>
           <Dialog.Description className="sr-only">
             Territory details including areas, population, and availability status
           </Dialog.Description>
-          <div className="mt-4 space-y-2">
+          <div className="mt-3 space-y-1.5">
             <div>
               <span className="text-sm font-medium text-gray-600">
                 {territory.areas.length > 1 ? 'Areas:' : 'Area:'}
@@ -51,7 +51,7 @@ export function TerritoryModal({ territory, open, onOpenChange }: TerritoryModal
             </div>
           </div>
           <Dialog.Close asChild>
-            <button className="mt-4 rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200">
+            <button className="mt-3 rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200">
               Close
             </button>
           </Dialog.Close>
