@@ -12,7 +12,7 @@ const DEFAULT_ZOOM = 6
 function ZoomControlPosition() {
   const map = useMap()
   useEffect(() => {
-    map.zoomControl?.setPosition('topright')
+    map.zoomControl?.setPosition('bottomleft')
   }, [map])
   return null
 }

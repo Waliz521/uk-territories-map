@@ -14,7 +14,7 @@ const STATUS_ORDER: TerritoryStatus[] = [
 
 export function Legend() {
   return (
-    <div className="absolute bottom-12 right-3 z-[1000] rounded-lg bg-white/95 p-2 shadow-lg sm:bottom-14 sm:right-4 sm:p-3">
+    <div className="absolute bottom-6 right-3 z-[1000] rounded-lg bg-white/95 p-2 shadow-lg sm:bottom-8 sm:right-4 sm:p-3">
       <h3 className="mb-1.5 text-xs font-semibold text-gray-700 sm:mb-2 sm:text-sm">Status</h3>
       <ul className="space-y-1.5">
         {STATUS_ORDER.map((status) => (
