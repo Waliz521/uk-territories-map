@@ -5,6 +5,7 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import type { TerritoryGroup } from '../types'
 import { getDisplayColor, getDisplayStatus, DISPLAY_LABELS } from '../data/statusColors'
+import { TERRITORY_DISPLAY_NAMES } from '../data/territories'
 
 interface TerritoryModalProps {
   territory: TerritoryGroup | null
@@ -19,7 +20,9 @@ export function TerritoryModal({ territory, open, onOpenChange }: TerritoryModal
       <Dialog.Overlay className="fixed inset-0 z-[2000] bg-black/40" />
       <Dialog.Content className="fixed left-1/2 top-1/2 z-[2001] w-fit min-w-[280px] max-w-[90vw] -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-4 shadow-xl">
           <Dialog.Title className="text-lg font-semibold text-gray-900">
-            {territory.areas.length > 1 ? `Territory ${territory.id}` : territory.areas[0]?.name ?? territory.id}
+            {territory.areas.length > 1
+              ? (TERRITORY_DISPLAY_NAMES[territory.id] ?? `Territory ${territory.id}`)
+              : territory.areas[0]?.name ?? territory.id}
           </Dialog.Title>
           <Dialog.Description className="sr-only">
             Territory details including areas, population, and availability status
