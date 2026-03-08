@@ -1,9 +1,10 @@
 import { createContext, useContext } from 'react'
-import type { TerritoryGroup, TerritoryStatus } from '../types'
+import type { TerritoryGroup } from '../types'
+import type { DisplayStatus } from '../data/statusColors'
 
 export interface MapFilters {
   territoryId: string
-  status: TerritoryStatus | ''
+  status: DisplayStatus | ''
 }
 
 export interface MapContextValue {

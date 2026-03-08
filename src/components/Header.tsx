@@ -8,16 +8,17 @@ import * as Select from '@radix-ui/react-select'
 import * as Dialog from '@radix-ui/react-dialog'
 import { useMapContext } from '../context/MapContext'
 import { getTerritoryFilterOptions } from '../data/territories'
-import { STATUS_LABELS } from '../data/statusColors'
-import type { TerritoryStatus } from '../types'
+import { DISPLAY_LABELS } from '../data/statusColors'
+import type { DisplayStatus } from '../data/statusColors'
 
 const ALL_VALUE = '__all__'
 
-const STATUS_OPTIONS: { value: TerritoryStatus | typeof ALL_VALUE; label: string }[] = [
+const STATUS_OPTIONS: { value: DisplayStatus | typeof ALL_VALUE; label: string }[] = [
   { value: ALL_VALUE, label: 'All statuses' },
-  ...(['sold', 'reserved', 'available', 'under_offer', 'unavailable'] as TerritoryStatus[]).map(
-    (s) => ({ value: s, label: STATUS_LABELS[s] })
-  ),
+  { value: 'available', label: DISPLAY_LABELS.available },
+  { value: 'reserved', label: DISPLAY_LABELS.reserved },
+  { value: 'sold', label: DISPLAY_LABELS.sold },
+  { value: 'not_available', label: DISPLAY_LABELS.not_available },
 ]
 
 const triggerClass =
@@ -85,7 +86,7 @@ function FilterDropdowns({ compact = false }: { compact?: boolean }) {
           onValueChange={(v) =>
             setFilters((prev) => ({
               ...prev,
-              status: (v === ALL_VALUE ? '' : v) as TerritoryStatus | '',
+              status: (v === ALL_VALUE ? '' : v) as DisplayStatus | '',
             }))
           }
         >

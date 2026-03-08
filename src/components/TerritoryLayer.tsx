@@ -6,13 +6,13 @@ import { GeoJSON, useMap } from 'react-leaflet'
 import type { Feature, FeatureCollection } from 'geojson'
 import type { PathOptions, Layer, LeafletEvent } from 'leaflet'
 import { loadEnglandWalesGeoJson } from '../utils/geojsonLoader'
+import { getDisplayStatus } from '../data/statusColors'
 import { STATUS_COLORS } from '../data/statusColors'
 import { useMapContext } from '../context/MapContext'
 import {
   buildAreaToTerritoryMap,
   buildTerritoryGroups,
   AREA_RECORDS,
-  TEST_STATUS_OVERRIDES,
 } from '../data/territories'
 import type { AreaRecord, TerritoryGroup } from '../types'
 import { bbox } from '@turf/turf'
@@ -74,7 +74,7 @@ export function TerritoryLayer() {
   const { selectTerritory, openModal, filters } = useMapContext()
 
   const areaToTerritory = useMemo(() => {
-    const groups = buildTerritoryGroups(AREA_RECORDS, TEST_STATUS_OVERRIDES)
+    const groups = buildTerritoryGroups(AREA_RECORDS)
     return buildAreaToTerritoryMap(groups)
   }, [])
 
@@ -89,7 +89,7 @@ export function TerritoryLayer() {
       const territory = areaToTerritory.get(normName)
       if (!territory) return !territoryId && !status
       if (territoryId && territory.id !== territoryId) return false
-      if (status && territory.status !== status) return false
+      if (status && getDisplayStatus(territory.status) !== status) return false
       return true
     })
 

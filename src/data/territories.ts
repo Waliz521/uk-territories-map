@@ -10,20 +10,53 @@ import { LAD_TO_COUNTY } from './ladToCounty'
 export const AREA_RECORDS: AreaRecord[] = territoriesData as AreaRecord[]
 
 /**
- * Test status overrides - change some territories for filter/legend testing.
- * Remove or empty this for production.
+ * Client-provided status overrides.
+ * Only territories in the client's list are Available (green) or Reserved (blue).
+ * Everything else = Not available (gray).
+ * Based on client attachment: green = Available, blue = Reserved (Newham only).
  */
-export const TEST_STATUS_OVERRIDES: Record<string, TerritoryStatus> = {
-  '1': 'sold',
-  '2': 'reserved',
-  '3': 'under_offer',
-  '4': 'unavailable',
-  '5': 'reserved',
+export const CLIENT_STATUS_OVERRIDES: Record<string, TerritoryStatus> = {
+  // Reserved (blue) - Newham only
+  '27': 'reserved',
+  // Available (green) - territories from client's list
+  '4': 'available',   // Camden
+  '6': 'available',  // Islington
+  '7': 'available',  // Barking and Dagenham
+  '10': 'available', // Haringey
+  '17': 'available', // Southwark
+  '18': 'available', // Lambeth
+  '22': 'available', // Enfield
+  '25': 'available', // Brent
+  '26': 'available', // Ealing
+  '30-34': 'available',  // Hampshire, Portsmouth, Isle of Wight
+  '35': 'available',   // Durham, Northumberland
+  '36-37': 'available', // Leicestershire, Rutland
+  '38-40': 'available', // Gloucestershire, Herefordshire
+  '43': 'available',   // Dorset
+  '45-46': 'available', // Bristol
+  '49-50': 'available', // Wiltshire
+  '53-55': 'available', // Buckinghamshire
+  '67-70': 'available', // Warwickshire
+  '87-89': 'available', // Lincolnshire
+  '90-92': 'available', // Northamptonshire (North Northamptonshire)
+  '93-95': 'available', // Derbyshire
+  '99-101': 'available', // Nottinghamshire
+  '101-103': 'available', // Staffordshire (North Staffordshire)
+  '104-106': 'available', // West Sussex
+  '107-109': 'available', // Norfolk
+  '110-112': 'available', // Berkshire (Reading)
+  '113-116': 'available', // Cheshire (Cheshire and Wirral)
+  '117-120': 'available', // Tyne and Wear (Gateshead)
+  '121-124': 'available', // Hertfordshire
+  '125-128': 'available', // Surrey
+  '129-132': 'available', // South Yorkshire (Sheffield)
+  '138-142': 'available', // Lancashire
+  '159-164': 'available', // Greater Manchester (Salford)
 }
 
 /**
  * Build territory groups from area records
- * Groups areas by territory ID; ranges like "77-79" become one group
+ * Default status is 'unavailable' - only whitelisted territories get available/reserved
  */
 export function buildTerritoryGroups(
   records: AreaRecord[],
@@ -35,11 +68,12 @@ export function buildTerritoryGroups(
     if (!byTerritory.has(key)) byTerritory.set(key, [])
     byTerritory.get(key)!.push(r)
   }
+  const merged = { ...CLIENT_STATUS_OVERRIDES, ...statusMap }
   return Array.from(byTerritory.entries()).map(([id, areas]) => ({
     id,
     areas,
     totalPopulation: areas.reduce((s, a) => s + a.population, 0),
-    status: statusMap[id] ?? 'available',
+    status: merged[id] ?? 'unavailable',
   }))
 }
 

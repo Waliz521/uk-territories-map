@@ -4,7 +4,7 @@
  */
 import * as Dialog from '@radix-ui/react-dialog'
 import type { TerritoryGroup } from '../types'
-import { STATUS_COLORS, STATUS_LABELS } from '../data/statusColors'
+import { getDisplayColor, getDisplayStatus, DISPLAY_LABELS } from '../data/statusColors'
 
 interface TerritoryModalProps {
   territory: TerritoryGroup | null
@@ -44,9 +44,9 @@ export function TerritoryModal({ territory, open, onOpenChange }: TerritoryModal
             <div>
               <span
                 className="inline-block rounded-full px-3 py-1 text-sm font-medium text-white"
-                style={{ backgroundColor: STATUS_COLORS[territory.status] }}
+                style={{ backgroundColor: getDisplayColor(territory.status) }}
               >
-                {STATUS_LABELS[territory.status]}
+                {DISPLAY_LABELS[getDisplayStatus(territory.status)]}
               </span>
             </div>
           </div>
