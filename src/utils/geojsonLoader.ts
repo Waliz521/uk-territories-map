@@ -1,17 +1,14 @@
 /**
- * Load and merge GeoJSON for England + Wales
- * Files should be placed in public/geojson/ (see README for download instructions)
+ * Load and merge GeoJSON for England + Wales.
+ * Bundled at build time (no runtime fetch) for reliable WordPress deployment.
  */
 import type { FeatureCollection } from 'geojson'
-
-const ENG_LAD_URL = '/geojson/eng/England.geojson'
-const WAL_LAD_URL = '/geojson/wal/wales.geojson'
+import engGeoJson from '../data/england.json'
+import walGeoJson from '../data/wales.json'
 
 export async function loadEnglandWalesGeoJson(): Promise<FeatureCollection> {
-  const [eng, wal] = await Promise.all([
-    fetch(ENG_LAD_URL).then((r) => r.json()),
-    fetch(WAL_LAD_URL).then((r) => r.json()),
-  ])
+  const eng = engGeoJson as FeatureCollection
+  const wal = walGeoJson as FeatureCollection
   return {
     type: 'FeatureCollection',
     features: [...eng.features, ...wal.features],

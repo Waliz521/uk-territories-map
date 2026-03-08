@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:wordpress": "node -e \"require('fs').mkdirSync('src/data',{recursive:true})\" && node -e \"require('fs').copyFileSync('public/geojson/eng/England.geojson','src/data/england.json')\" && node -e \"require('fs').copyFileSync('public/geojson/wal/wales.geojson','src/data/wales.json')\" && tsc -b && vite build --config vite.wordpress.config.ts",
+    "zip:wordpress": "npm run build:wordpress && powershell \"Compress-Archive -Path 'wordpress/bc-uk-territories-map/*' -DestinationPath 'bc-uk-territories-map.zip' -Force\"",
     "lint": "eslint .",
     "preview": "vite preview"
   },

@@ -10,6 +10,17 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+dist-wordpress
+bc-uk-territories-map.zip
+wordpress/uk-territories-map/build
+wordpress/bc-uk-territories-map/build
+wordpress/bc-uk-territories-map/index.js
+wordpress/bc-uk-territories-map/index.css
+wordpress/bc-uk-territories-map/index.html
+wordpress/bc-uk-territories-map/geojson
+wordpress/bc-uk-territories-map/vite.svg
+src/data/england.json
+src/data/wales.json
 *.local
 
 # Editor directories and files
