@@ -29,6 +29,7 @@ export async function fetchLocations(): Promise<ApiLocation[]> {
       apikey: SUPABASE_ANON_KEY,
       Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
     },
+    cache: 'no-store',
   })
   if (!res.ok) throw new Error('Failed to fetch locations')
   return res.json()

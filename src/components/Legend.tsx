@@ -3,12 +3,19 @@
  */
 import { DISPLAY_COLORS, DISPLAY_LABELS } from '../data/statusColors'
 import type { DisplayStatus } from '../data/statusColors'
+import { isApiEnabled } from '../data/territoriesApi'
 
 const DISPLAY_ORDER: DisplayStatus[] = ['available', 'reserved', 'sold', 'not_available']
 
 export function Legend() {
   return (
-    <div className="absolute bottom-6 right-3 z-[1000] rounded-lg bg-white/95 p-2 shadow-lg sm:bottom-8 sm:right-4 sm:p-3">
+    <div className="absolute bottom-6 right-3 z-[1000] space-y-2 sm:bottom-8 sm:right-4">
+      {isApiEnabled() && (
+        <div className="rounded-lg bg-emerald-100 px-2 py-1 text-xs font-medium text-emerald-800">
+          Live data
+        </div>
+      )}
+      <div className="rounded-lg bg-white/95 p-2 shadow-lg sm:p-3">
       <h3 className="mb-1.5 text-xs font-semibold text-gray-700 sm:mb-2 sm:text-sm">Status</h3>
       <ul className="space-y-1.5">
         {DISPLAY_ORDER.map((status) => (
@@ -20,7 +27,8 @@ export function Legend() {
             <span>{DISPLAY_LABELS[status]}</span>
           </li>
         ))}
-      </ul>
+        </ul>
+      </div>
     </div>
   )
 }
