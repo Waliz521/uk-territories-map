@@ -7,7 +7,7 @@ import { useState } from 'react'
 import * as Select from '@radix-ui/react-select'
 import * as Dialog from '@radix-ui/react-dialog'
 import { useMapContext } from '../context/MapContext'
-import { getTerritoryFilterOptions } from '../data/territories'
+import { useTerritoryData } from '../context/TerritoryDataContext'
 import { DISPLAY_LABELS } from '../data/statusColors'
 import type { DisplayStatus } from '../data/statusColors'
 
@@ -32,7 +32,7 @@ const itemClass =
 
 function FilterDropdowns({ compact = false }: { compact?: boolean }) {
   const { filters, setFilters } = useMapContext()
-  const territoryOptions = getTerritoryFilterOptions()
+  const { territoryFilterOptions } = useTerritoryData()
 
   return (
     <div className={`flex flex-col gap-4 ${compact ? 'sm:flex-row sm:flex-wrap' : 'flex-row flex-wrap'} sm:gap-4`}>
@@ -67,7 +67,7 @@ function FilterDropdowns({ compact = false }: { compact?: boolean }) {
                 <Select.Item value={ALL_VALUE} className={itemClass}>
                   <Select.ItemText>All territories</Select.ItemText>
                 </Select.Item>
-                {territoryOptions.map(({ id, label }) => (
+                {territoryFilterOptions.map(({ id, label }) => (
                   <Select.Item key={id} value={id} className={itemClass}>
                     <Select.ItemText>{label}</Select.ItemText>
                   </Select.Item>

@@ -1,6 +1,6 @@
 /**
  * Status colour mapping for territory choropleth
- * "Under Offer" removed per client request. Sold, Reserved, Available, Unavailable kept.
+ * Sold, Reserved, Available, Not available.
  */
 import type { TerritoryStatus } from '../types'
 
@@ -20,9 +20,8 @@ export const DISPLAY_LABELS: Record<DisplayStatus, string> = {
   not_available: 'Not available',
 }
 
-/** Map internal status to display (under_offer → not_available, rest unchanged) */
+/** Map internal status to display */
 export function getDisplayStatus(status: TerritoryStatus): DisplayStatus {
-  if (status === 'under_offer') return 'not_available'
   if (status === 'sold') return 'sold'
   if (status === 'available') return 'available'
   if (status === 'reserved') return 'reserved'
@@ -38,6 +37,5 @@ export const STATUS_COLORS: Record<TerritoryStatus, string> = {
   sold: DISPLAY_COLORS.sold,
   reserved: DISPLAY_COLORS.reserved,
   available: DISPLAY_COLORS.available,
-  under_offer: DISPLAY_COLORS.not_available,
   unavailable: DISPLAY_COLORS.not_available,
 }

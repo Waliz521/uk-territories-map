@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { MapContext, type MapContextValue, type MapFilters } from './context/MapContext'
+import { TerritoryDataProvider } from './context/TerritoryDataContext'
 import { Header } from './components/Header'
 import { Map } from './components/Map'
 import { TerritoryLayer } from './components/TerritoryLayer'
@@ -25,22 +26,24 @@ function App() {
   }
 
   return (
-    <MapContext.Provider value={mapContext}>
-      <div className="flex h-screen flex-col overflow-hidden">
-        <Header />
-        <main className="relative flex-1">
-          <Map>
-            <TerritoryLayer />
-          </Map>
-          <Legend />
-        </main>
-        <TerritoryModal
-          territory={selectedTerritory}
-          open={modalOpen}
-          onOpenChange={setModalOpen}
-        />
-      </div>
-    </MapContext.Provider>
+    <TerritoryDataProvider>
+      <MapContext.Provider value={mapContext}>
+        <div className="flex h-screen flex-col overflow-hidden">
+          <Header />
+          <main className="relative flex-1">
+            <Map>
+              <TerritoryLayer />
+            </Map>
+            <Legend />
+          </main>
+          <TerritoryModal
+            territory={selectedTerritory}
+            open={modalOpen}
+            onOpenChange={setModalOpen}
+          />
+        </div>
+      </MapContext.Provider>
+    </TerritoryDataProvider>
   )
 }
 

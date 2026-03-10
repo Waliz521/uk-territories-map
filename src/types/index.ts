@@ -7,7 +7,6 @@ export type TerritoryStatus =
   | 'sold'
   | 'reserved'
   | 'available'
-  | 'under_offer'
   | 'unavailable'
 
 /** Single area from Excel (borough or county) */
@@ -17,6 +16,8 @@ export interface AreaRecord {
   region: 'England' | 'Wales'
   population: number
   territory: string // e.g. "1", "77-79", or empty for ungrouped
+  /** Optional metadata from API (key:value,key:value) */
+  metadata?: string
 }
 
 /** Grouped territory - multiple areas with same territory ID */
@@ -25,6 +26,8 @@ export interface TerritoryGroup {
   areas: AreaRecord[]
   totalPopulation: number
   status: TerritoryStatus
+  /** Merged metadata from areas (key:value,key:value) */
+  metadata?: string
 }
 
 /** GeoJSON feature properties (from UK-GeoJSON LAD) */

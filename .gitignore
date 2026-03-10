@@ -22,6 +22,7 @@ wordpress/bc-uk-territories-map/vite.svg
 src/data/england.json
 src/data/wales.json
 *.local
+.env
 
 # Editor directories and files
 .vscode/*

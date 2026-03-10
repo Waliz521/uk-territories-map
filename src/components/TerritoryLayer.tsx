@@ -9,19 +9,15 @@ import { loadEnglandWalesGeoJson } from '../utils/geojsonLoader'
 import { getDisplayStatus } from '../data/statusColors'
 import { STATUS_COLORS } from '../data/statusColors'
 import { useMapContext } from '../context/MapContext'
-import {
-  buildAreaToTerritoryMap,
-  buildTerritoryGroups,
-  AREA_RECORDS,
-} from '../data/territories'
+import { useTerritoryData } from '../context/TerritoryDataContext'
 import type { AreaRecord, TerritoryGroup } from '../types'
 import { bbox } from '@turf/turf'
 
-const BASE_STYLE = { weight: 1, fillOpacity: 0.5 }
+const BASE_STYLE = { weight: 1, fillOpacity: 0.35 }
 
 const HOVER_STYLE: PathOptions = {
   weight: 2,
-  fillOpacity: 0.7,
+  fillOpacity: 0.5,
 }
 
 function styleForStatus(status: keyof typeof STATUS_COLORS): PathOptions {
@@ -70,13 +66,9 @@ function getTerritoryForFeature(
 
 export function TerritoryLayer() {
   const [geojson, setGeojson] = useState<FeatureCollection | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  const [geojsonError, setGeojsonError] = useState<string | null>(null)
   const { selectTerritory, openModal, filters } = useMapContext()
-
-  const areaToTerritory = useMemo(() => {
-    const groups = buildTerritoryGroups(AREA_RECORDS)
-    return buildAreaToTerritoryMap(groups)
-  }, [])
+  const { areaToTerritory, loading, error } = useTerritoryData()
 
   const filteredGeojson = useMemo(() => {
     if (!geojson) return null
@@ -99,8 +91,16 @@ export function TerritoryLayer() {
   useEffect(() => {
     loadEnglandWalesGeoJson()
       .then(setGeojson)
-      .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load GeoJSON'))
+      .catch((err) => setGeojsonError(err instanceof Error ? err.message : 'Failed to load GeoJSON'))
   }, [])
+
+  if (geojsonError) {
+    return (
+      <div className="absolute left-4 top-20 z-[1000] rounded bg-red-100 px-3 py-2 text-sm text-red-800">
+        {geojsonError}
+      </div>
+    )
+  }
 
   if (error) {
     return (
@@ -110,7 +110,7 @@ export function TerritoryLayer() {
     )
   }
 
-  if (!filteredGeojson) return null
+  if (loading || !filteredGeojson) return null
 
   return (
     <>

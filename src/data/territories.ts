@@ -163,6 +163,24 @@ export function getTerritoryFilterOptions(): { id: string; label: string }[] {
     }))
 }
 
+/** Build filter options from territory groups (for API data) */
+export function getTerritoryFilterOptionsFromGroups(
+  groups: TerritoryGroup[]
+): { id: string; label: string }[] {
+  return groups
+    .filter((g) => g.id && !g.id.startsWith('ungrouped-'))
+    .map((g) => ({
+      id: g.id,
+      label: TERRITORY_DISPLAY_NAMES[g.id] ?? `Territory ${g.id}`,
+    }))
+    .sort((a, b) => {
+      const numA = parseInt(a.id, 10)
+      const numB = parseInt(b.id, 10)
+      if (!Number.isNaN(numA) && !Number.isNaN(numB)) return numA - numB
+      return a.id.localeCompare(b.id)
+    })
+}
+
 /** Map: normalized area name -> TerritoryGroup (for lookup when user clicks) */
 export function buildAreaToTerritoryMap(
   groups: TerritoryGroup[]
