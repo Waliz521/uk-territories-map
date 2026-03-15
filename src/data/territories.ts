@@ -183,11 +183,13 @@ export function getTerritoryFilterOptionsFromGroups(
 
 /** Map: normalized area name -> TerritoryGroup (for lookup when user clicks) */
 export function buildAreaToTerritoryMap(
-  groups: TerritoryGroup[]
+  groups: TerritoryGroup[],
+  /** When true (API/Supabase data), skip hardcoded Hampshire override - use API-derived mapping */
+  useApiData = false
 ): Map<string, TerritoryGroup> {
   const map = new Map<string, TerritoryGroup>()
 
-  // 1. Direct area -> territory (boroughs, unitary LADs that match Excel names)
+  // 1. Direct area -> territory (boroughs, unitary LADs that match Excel/API names)
   for (const group of groups) {
     for (const area of group.areas) {
       const key = normalizeName(area.name)
@@ -195,11 +197,14 @@ export function buildAreaToTerritoryMap(
     }
   }
 
-  // 2. Hampshire split: LAD → territory (overrides county mapping)
-  const groupById = new Map(groups.map((g) => [g.id, g]))
-  for (const [ladKey, territoryId] of Object.entries(LAD_TO_HAMPSHIRE_TERRITORY)) {
-    const group = groupById.get(territoryId)
-    if (group) map.set(ladKey, group)
+  // 2. Hampshire split: LAD → territory (overrides county mapping). Skip when using API data –
+  //    API already has correct territory per location; hardcoded map would override and cause bugs.
+  if (!useApiData) {
+    const groupById = new Map(groups.map((g) => [g.id, g]))
+    for (const [ladKey, territoryId] of Object.entries(LAD_TO_HAMPSHIRE_TERRITORY)) {
+      const group = groupById.get(territoryId)
+      if (group) map.set(ladKey, group)
+    }
   }
 
   // 3. County-level expansion: Excel has county names (e.g. Surrey, Derbyshire)

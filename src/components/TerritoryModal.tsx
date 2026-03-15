@@ -1,7 +1,9 @@
 /**
  * Modal shown when user clicks a territory
  * Displays territory ID, areas, population, status, metadata
+ * Draggable via the title bar (mouse and touch)
  */
+import { useRef, useState, useEffect, useCallback } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import type { TerritoryGroup } from '../types'
 import { getDisplayColor, getDisplayStatus, DISPLAY_LABELS } from '../data/statusColors'
@@ -29,17 +31,101 @@ interface TerritoryModalProps {
 }
 
 export function TerritoryModal({ territory, open, onOpenChange }: TerritoryModalProps) {
+  const contentRef = useRef<HTMLDivElement>(null)
+  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const dragRef = useRef<{ startX: number; startY: number; startPosX: number; startPosY: number } | null>(null)
+
+  // Reset position when modal opens
+  useEffect(() => {
+    if (open) setPosition({ x: 0, y: 0 })
+  }, [open])
+
+  const clampPosition = useCallback((x: number, y: number) => {
+    const el = contentRef.current
+    if (!el) return { x, y }
+    const rect = el.getBoundingClientRect()
+    const vw = window.innerWidth
+    const vh = window.innerHeight
+    const padding = 8
+    const leftOffset = 16 // matches left-4
+    const minX = padding - leftOffset
+    const maxX = vw - leftOffset - rect.width - padding
+    const minY = padding - (vh / 2 - rect.height / 2)
+    const maxY = vh / 2 - rect.height / 2 - padding
+    return {
+      x: Math.max(minX, Math.min(maxX, x)),
+      y: Math.max(minY, Math.min(maxY, y)),
+    }
+  }, [])
+
+  const getClientCoords = (e: MouseEvent | TouchEvent): { clientX: number; clientY: number } => {
+    if ('touches' in e) {
+      return { clientX: e.touches[0]?.clientX ?? 0, clientY: e.touches[0]?.clientY ?? 0 }
+    }
+    return { clientX: e.clientX, clientY: e.clientY }
+  }
+
+  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
+    const { clientX, clientY } = 'touches' in e ? { clientX: e.touches[0].clientX, clientY: e.touches[0].clientY } : { clientX: e.clientX, clientY: e.clientY }
+    dragRef.current = { startX: clientX, startY: clientY, startPosX: position.x, startPosY: position.y }
+  }
+
+  useEffect(() => {
+    if (!open) return
+    const handleMove = (e: MouseEvent | TouchEvent) => {
+      if (!dragRef.current) return
+      if ('touches' in e) e.preventDefault()
+      const { clientX, clientY } = getClientCoords(e)
+      const dx = clientX - dragRef.current.startX
+      const dy = clientY - dragRef.current.startY
+      const newX = dragRef.current.startPosX + dx
+      const newY = dragRef.current.startPosY + dy
+      setPosition(clampPosition(newX, newY))
+    }
+    const handleEnd = () => {
+      dragRef.current = null
+    }
+    document.addEventListener('mousemove', handleMove)
+    document.addEventListener('mouseup', handleEnd)
+    document.addEventListener('touchmove', handleMove, { passive: false })
+    document.addEventListener('touchend', handleEnd)
+    document.addEventListener('touchcancel', handleEnd)
+    return () => {
+      document.removeEventListener('mousemove', handleMove)
+      document.removeEventListener('mouseup', handleEnd)
+      document.removeEventListener('touchmove', handleMove)
+      document.removeEventListener('touchend', handleEnd)
+      document.removeEventListener('touchcancel', handleEnd)
+    }
+  }, [open, clampPosition])
+
   if (!territory) return null
   const metadataEntries = parseMetadata(territory.metadata)
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Overlay className="fixed inset-0 z-[2000] bg-black/40" />
-      <Dialog.Content className="fixed left-4 top-1/2 z-[2001] w-fit min-w-[280px] max-w-[90vw] -translate-y-1/2 rounded-xl bg-white p-4 shadow-xl">
+      <Dialog.Content
+        ref={contentRef}
+        className="fixed left-4 top-1/2 z-[2001] w-fit min-w-[280px] max-w-[90vw] rounded-xl bg-white p-4 shadow-xl"
+        style={{
+          transform: `translateY(-50%) translate(${position.x}px, ${position.y}px)`,
+        }}
+      >
+        <div
+          role="button"
+          tabIndex={0}
+          onMouseDown={handleDragStart}
+          onTouchStart={handleDragStart}
+          onKeyDown={(e) => e.key === 'Enter' && (e.target as HTMLElement).focus()}
+          className="-mx-4 -mt-4 cursor-grab rounded-t-xl px-4 pt-4 pb-2 active:cursor-grabbing touch-none select-none"
+          aria-label="Drag to move modal"
+        >
           <Dialog.Title className="text-lg font-semibold text-gray-900">
             {territory.areas.length > 1
               ? (TERRITORY_DISPLAY_NAMES[territory.id] ?? `Territory ${territory.id}`)
               : territory.areas[0]?.name ?? territory.id}
           </Dialog.Title>
+        </div>
           <Dialog.Description className="sr-only">
             Territory details including areas, population, and availability status
           </Dialog.Description>
@@ -49,8 +135,8 @@ export function TerritoryModal({ territory, open, onOpenChange }: TerritoryModal
                 {territory.areas.length > 1 ? 'Areas:' : 'Area:'}
               </span>
               <ul className="mt-1 list-inside list-disc text-sm text-gray-700">
-                {territory.areas.map((a) => (
-                  <li key={a.name}>{a.name}</li>
+                {territory.areas.map((a, i) => (
+                  <li key={`${a.name}-${i}`}>{a.name}</li>
                 ))}
               </ul>
             </div>

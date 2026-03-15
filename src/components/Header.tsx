@@ -3,11 +3,12 @@
  * Mobile: logo + title + hamburger (filters in slide-out panel)
  * Desktop: logo + title + filters inline
  */
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import * as Select from '@radix-ui/react-select'
 import * as Dialog from '@radix-ui/react-dialog'
 import { useMapContext } from '../context/MapContext'
 import { useTerritoryData } from '../context/TerritoryDataContext'
+import { SearchableSelect } from './SearchableSelect'
 import { DISPLAY_LABELS } from '../data/statusColors'
 import type { DisplayStatus } from '../data/statusColors'
 
@@ -34,48 +35,31 @@ function FilterDropdowns({ compact = false }: { compact?: boolean }) {
   const { filters, setFilters } = useMapContext()
   const { territoryFilterOptions } = useTerritoryData()
 
+  const territoryOptions = useMemo(
+    () => [
+      { value: ALL_VALUE, label: 'All territories' },
+      ...territoryFilterOptions.map(({ id, label }) => ({ value: id, label })),
+    ],
+    [territoryFilterOptions]
+  )
+
   return (
     <div className={`flex flex-col gap-4 ${compact ? 'sm:flex-row sm:flex-wrap' : 'flex-row flex-wrap'} sm:gap-4`}>
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
         <span className={`text-sm font-medium text-gray-600 ${compact ? 'block' : 'hidden sm:inline'}`}>
           Territory
         </span>
-        <Select.Root
+        <SearchableSelect
           value={filters.territoryId || ALL_VALUE}
           onValueChange={(v) => {
             const territoryId = v === ALL_VALUE ? '' : v
             setFilters((prev) => ({ ...prev, territoryId }))
           }}
-        >
-          <Select.Trigger className={triggerClass} aria-label="Filter by territory">
-            <Select.Value placeholder="All territories" />
-            <Select.Icon className="ml-auto shrink-0">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-                <path
-                  d="M3 4.5L6 7.5L9 4.5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Select.Icon>
-          </Select.Trigger>
-          <Select.Portal>
-            <Select.Content className={contentClass} position="popper" sideOffset={4}>
-              <Select.Viewport>
-                <Select.Item value={ALL_VALUE} className={itemClass}>
-                  <Select.ItemText>All territories</Select.ItemText>
-                </Select.Item>
-                {territoryFilterOptions.map(({ id, label }) => (
-                  <Select.Item key={id} value={id} className={itemClass}>
-                    <Select.ItemText>{label}</Select.ItemText>
-                  </Select.Item>
-                ))}
-              </Select.Viewport>
-            </Select.Content>
-          </Select.Portal>
-        </Select.Root>
+          options={territoryOptions}
+          placeholder="All territories"
+          searchPlaceholder="Search by name or number..."
+          ariaLabel="Filter by territory"
+        />
       </div>
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
         <span className={`text-sm font-medium text-gray-600 ${compact ? 'block' : 'hidden sm:inline'}`}>

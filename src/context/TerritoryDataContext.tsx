@@ -4,6 +4,7 @@ import {
   useEffect,
   useState,
   useMemo,
+  useCallback,
   type ReactNode,
 } from 'react'
 import type { AreaRecord, TerritoryGroup } from '../types'
@@ -41,17 +42,16 @@ export function TerritoryDataProvider({ children }: { children: ReactNode }) {
     isApiEnabled() ? [] : buildTerritoryGroups(AREA_RECORDS)
   )
 
-  useEffect(() => {
-    if (!isApiEnabled()) {
-      setLoading(false)
-      return
-    }
-    fetchLocations()
+  const refetch = useCallback(() => {
+    if (!isApiEnabled()) return
+    setLoading(true)
+    return fetchLocations()
       .then((locs) => {
         const { areaRecords: recs, groups: grps } =
           buildTerritoryGroupsFromApi(locs)
         setAreaRecords(recs)
         setGroups(grps)
+        setError(null)
       })
       .catch((err) => {
         setError(err instanceof Error ? err.message : 'Failed to load data')
@@ -59,8 +59,26 @@ export function TerritoryDataProvider({ children }: { children: ReactNode }) {
       .finally(() => setLoading(false))
   }, [])
 
+  useEffect(() => {
+    if (!isApiEnabled()) {
+      setLoading(false)
+      return
+    }
+    refetch()
+  }, [])
+
+  // Refetch when user returns to map tab (e.g. after editing in admin)
+  useEffect(() => {
+    if (!isApiEnabled()) return
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'visible') refetch()
+    }
+    document.addEventListener('visibilitychange', onVisibilityChange)
+    return () => document.removeEventListener('visibilitychange', onVisibilityChange)
+  }, [refetch])
+
   const areaToTerritory = useMemo(
-    () => buildAreaToTerritoryMap(groups),
+    () => buildAreaToTerritoryMap(groups, isApiEnabled()),
     [groups]
   )
 
