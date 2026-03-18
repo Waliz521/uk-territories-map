@@ -33,12 +33,23 @@ interface TerritoryModalProps {
 export function TerritoryModal({ territory, open, onOpenChange }: TerritoryModalProps) {
   const contentRef = useRef<HTMLDivElement>(null)
   const [position, setPosition] = useState({ x: 0, y: 0 })
+  const [isDesktop, setIsDesktop] = useState(false)
   const dragRef = useRef<{ startX: number; startY: number; startPosX: number; startPosY: number } | null>(null)
 
   // Reset position when modal opens
   useEffect(() => {
     if (open) setPosition({ x: 0, y: 0 })
   }, [open])
+
+  // Track viewport size to switch between centered (mobile) and bottom-left (desktop) transforms
+  useEffect(() => {
+    const updateViewport = () => {
+      setIsDesktop(window.innerWidth >= 768) // Tailwind md breakpoint
+    }
+    updateViewport()
+    window.addEventListener('resize', updateViewport)
+    return () => window.removeEventListener('resize', updateViewport)
+  }, [])
 
   const clampPosition = useCallback((x: number, y: number) => {
     const el = contentRef.current
@@ -106,9 +117,9 @@ export function TerritoryModal({ territory, open, onOpenChange }: TerritoryModal
       <Dialog.Overlay className="fixed inset-0 z-[2000] bg-black/40" />
       <Dialog.Content
         ref={contentRef}
-        className="fixed left-4 top-1/2 z-[2001] w-fit min-w-[280px] max-w-[90vw] rounded-xl bg-white p-4 shadow-xl"
+        className="fixed left-1/2 top-1/2 z-[2001] w-fit min-w-[280px] max-w-[90vw] rounded-xl bg-white p-4 shadow-xl md:left-4 md:top-auto md:bottom-4"
         style={{
-          transform: `translateY(-50%) translate(${position.x}px, ${position.y}px)`,
+          transform: `${isDesktop ? '' : 'translate(-50%, -50%) '}translate(${position.x}px, ${position.y}px)`.trim(),
         }}
       >
         <div
