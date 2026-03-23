@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { MapContext, type MapContextValue, type MapFilters } from './context/MapContext'
 import { TerritoryDataProvider } from './context/TerritoryDataContext'
 import { Header } from './components/Header'
+import { MapInfoBar } from './components/MapInfoBar'
 import { Map } from './components/Map'
 import { TerritoryLayer } from './components/TerritoryLayer'
 import { Legend } from './components/Legend'
@@ -30,11 +31,14 @@ function App() {
       <MapContext.Provider value={mapContext}>
         <div className="flex h-screen flex-col overflow-hidden">
           <Header />
-          <main className="relative flex-1">
-            <Map>
-              <TerritoryLayer />
-            </Map>
-            <Legend />
+          <main className="relative flex min-h-0 flex-1 flex-col overflow-hidden">
+            <MapInfoBar />
+            <div className="relative min-h-0 flex-1">
+              <Map>
+                <TerritoryLayer />
+              </Map>
+              <Legend />
+            </div>
           </main>
           <TerritoryModal
             territory={selectedTerritory}

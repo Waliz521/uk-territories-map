@@ -9,6 +9,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { useMapContext } from '../context/MapContext'
 import { useTerritoryData } from '../context/TerritoryDataContext'
 import { SearchableSelect } from './SearchableSelect'
+import { CONTACT_URL } from '../constants/site'
 import { DISPLAY_LABELS } from '../data/statusColors'
 import type { DisplayStatus } from '../data/statusColors'
 
@@ -30,6 +31,19 @@ const contentClass =
 
 const itemClass =
   'relative flex cursor-pointer select-none items-center px-3 py-2 text-sm outline-none data-[highlighted]:bg-[var(--brand-rose)]/10 data-[highlighted]:text-[var(--brand-rose-dark)]'
+
+function ContactUsLink({ className = '' }: { className?: string }) {
+  return (
+    <a
+      href={CONTACT_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`inline-flex shrink-0 items-center rounded-lg border border-[var(--brand-rose)]/40 bg-white px-3 py-2 text-sm font-medium text-[var(--brand-rose-dark)] transition-colors hover:bg-[var(--brand-rose)]/5 focus:outline-none focus:ring-2 focus:ring-[var(--brand-rose)]/30 ${className}`}
+    >
+      Contact us
+    </a>
+  )
+}
 
 function FilterDropdowns({ compact = false }: { compact?: boolean }) {
   const { filters, setFilters } = useMapContext()
@@ -166,8 +180,9 @@ export function Header() {
         </h1>
       </div>
 
-      {/* Desktop: filters inline */}
+      {/* Desktop: Contact us before Territory, then filters */}
       <div className="hidden md:flex md:flex-wrap md:items-center md:gap-3 md:gap-4">
+        <ContactUsLink />
         <FilterDropdowns />
       </div>
 
@@ -201,6 +216,9 @@ export function Header() {
                     <CloseIcon />
                   </button>
                 </Dialog.Close>
+              </div>
+              <div className="border-b border-gray-100 px-4 py-3">
+                <ContactUsLink className="w-full justify-center" />
               </div>
               <div className="flex-1 overflow-auto p-4">
                 <FilterDropdowns compact />

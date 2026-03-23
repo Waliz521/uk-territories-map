@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
 
 /* Blossoming Care brand - warm rose to match logo */
 :root {
@@ -8,6 +9,26 @@
 
 body {
   font-family: "Nunito", system-ui, sans-serif;
+}
+
+/*
+  Leaflet 1.9 sets mix-blend-mode: plus-lighter on raster tiles (Chromium crbug.com/600120).
+  On current Chrome/Edge that often produces a faint white “grid” over the basemap.
+  Reset to normal — if true tile gaps return on very old browsers, they’re preferable to a
+  constant grid artifact.
+*/
+.leaflet-container img.leaflet-tile {
+  mix-blend-mode: normal !important;
+}
+
+/*
+  Tailwind preflight uses img { max-width: 100%; height: auto }. Re-assert after @layer
+  ordering so map tiles never get constrained.
+*/
+.leaflet-container .leaflet-tile-pane img,
+.leaflet-container img.leaflet-tile {
+  max-width: none !important;
+  max-height: none !important;
 }
 
 /* Territory tooltip - match app font and legend typography */
