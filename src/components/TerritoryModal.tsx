@@ -7,7 +7,7 @@ import { useRef, useState, useEffect, useCallback } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import type { TerritoryGroup } from '../types'
 import { getDisplayColor, getDisplayStatus, DISPLAY_LABELS } from '../data/statusColors'
-import { getTerritoryLabel } from '../data/territories'
+import { getTerritoryModalTitle } from '../data/territories'
 
 /** Parse metadata: key:value;key:value (; separates pairs so commas in values are safe). Also supports | for merged segments. */
 function parseMetadata(metadata?: string): Array<{ key: string; value: string }> {
@@ -117,7 +117,7 @@ export function TerritoryModal({ territory, open, onOpenChange }: TerritoryModal
       <Dialog.Overlay className="fixed inset-0 z-[2000] bg-black/40" />
       <Dialog.Content
         ref={contentRef}
-        className="fixed left-1/2 top-1/2 z-[2001] w-fit min-w-[280px] max-w-[90vw] rounded-xl bg-white p-4 shadow-xl md:left-4 md:top-auto md:bottom-4"
+        className="fixed left-1/2 top-1/2 z-[2001] flex max-h-[min(85vh,32rem)] w-[min(90vw,20rem)] min-w-[280px] flex-col overflow-hidden rounded-xl bg-white shadow-xl md:left-4 md:top-auto md:bottom-4 md:max-h-[min(80vh,28rem)]"
         style={{
           transform: `${isDesktop ? '' : 'translate(-50%, -50%) '}translate(${position.x}px, ${position.y}px)`.trim(),
         }}
@@ -128,56 +128,68 @@ export function TerritoryModal({ territory, open, onOpenChange }: TerritoryModal
           onMouseDown={handleDragStart}
           onTouchStart={handleDragStart}
           onKeyDown={(e) => e.key === 'Enter' && (e.target as HTMLElement).focus()}
-          className="-mx-4 -mt-4 cursor-grab rounded-t-xl px-4 pt-4 pb-2 active:cursor-grabbing touch-none select-none"
+          className="shrink-0 cursor-grab border-b border-gray-100 px-4 py-3 active:cursor-grabbing touch-none select-none"
           aria-label="Drag to move modal"
         >
-          <Dialog.Title className="text-lg font-semibold text-gray-900">
+          <Dialog.Title className="text-lg font-semibold leading-tight text-gray-900">
             {territory.areas.length > 1
-              ? getTerritoryLabel(territory.id)
+              ? getTerritoryModalTitle(territory.id)
               : territory.areas[0]?.name ?? territory.id}
           </Dialog.Title>
+          {territory.areas.length > 1 && (
+            <p className="mt-0.5 text-xs text-gray-500">
+              {territory.areas.length} locations
+            </p>
+          )}
         </div>
-          <Dialog.Description className="sr-only">
-            Territory details including areas, population, and availability status
-          </Dialog.Description>
-          <div className="mt-3 space-y-1.5">
-            <div>
-              <span className="text-sm font-medium text-gray-600">
-                {territory.areas.length > 1 ? 'Areas:' : 'Area:'}
-              </span>
-              <ul className="mt-1 list-inside list-disc text-sm text-gray-700">
-                {territory.areas.map((a, i) => (
-                  <li key={`${a.name}-${i}`}>{a.name}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <span className="text-sm font-medium text-gray-600">Population:</span>
-              <span className="ml-2 text-sm text-gray-700">
-                {territory.totalPopulation > 0 ? territory.totalPopulation.toLocaleString() : 'N/A'}
-              </span>
-            </div>
-            <div>
-              <span
-                className="inline-block rounded-full px-3 py-1 text-sm font-medium text-white"
-                style={{ backgroundColor: getDisplayColor(territory.status) }}
-              >
-                {DISPLAY_LABELS[getDisplayStatus(territory.status)]}
-              </span>
-            </div>
-            {metadataEntries.map(({ key, value }) => (
-              <div key={key}>
-                <span className="text-sm font-medium text-gray-600">{key}:</span>
-                <span className="ml-2 text-sm text-gray-700">{value}</span>
-              </div>
-            ))}
+        <Dialog.Description className="sr-only">
+          Territory details including areas, population, and availability status
+        </Dialog.Description>
+
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-3">
+          <div>
+            <span className="text-sm font-medium text-gray-600">
+              {territory.areas.length > 1 ? 'Areas:' : 'Area:'}
+            </span>
+            <ul className="mt-1 list-inside list-disc space-y-0.5 text-sm text-gray-700">
+              {territory.areas.map((a, i) => (
+                <li key={`${a.name}-${i}`}>{a.name}</li>
+              ))}
+            </ul>
           </div>
+        </div>
+
+        <div className="shrink-0 space-y-2 border-t border-gray-100 bg-white px-4 py-3">
+          <div>
+            <span className="text-sm font-medium text-gray-600">Population:</span>
+            <span className="ml-2 text-sm text-gray-700">
+              {territory.totalPopulation > 0 ? territory.totalPopulation.toLocaleString() : 'N/A'}
+            </span>
+          </div>
+          <div>
+            <span
+              className="inline-block rounded-full px-3 py-1 text-sm font-medium text-white"
+              style={{ backgroundColor: getDisplayColor(territory.status) }}
+            >
+              {DISPLAY_LABELS[getDisplayStatus(territory.status)]}
+            </span>
+          </div>
+          {metadataEntries.map(({ key, value }) => (
+            <div key={key}>
+              <span className="text-sm font-medium text-gray-600">{key}:</span>
+              <span className="ml-2 text-sm text-gray-700">{value}</span>
+            </div>
+          ))}
           <Dialog.Close asChild>
-            <button className="mt-3 rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200">
+            <button
+              type="button"
+              className="w-full rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200"
+            >
               Close
             </button>
           </Dialog.Close>
-        </Dialog.Content>
+        </div>
+      </Dialog.Content>
     </Dialog.Root>
   )
 }

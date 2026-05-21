@@ -100,9 +100,14 @@ export const TERRITORY_DISPLAY_NAMES: Record<string, string> = {
   'hampshire-new-forest': 'New Forest',
 }
 
-/** Label for filter/modal: friendly name if known, otherwise use id as stored in admin */
+/** Label for filter dropdown: friendly name if known, otherwise use id as stored in admin */
 export function getTerritoryLabel(territoryId: string): string {
   return TERRITORY_DISPLAY_NAMES[territoryId] ?? territoryId
+}
+
+/** Modal title only — client wants "Territory" prefix in the popup, not in filters */
+export function getTerritoryModalTitle(territoryId: string): string {
+  return `Territory ${getTerritoryLabel(territoryId)}`
 }
 
 /**
