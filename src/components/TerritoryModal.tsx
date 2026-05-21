@@ -7,7 +7,7 @@ import { useRef, useState, useEffect, useCallback } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import type { TerritoryGroup } from '../types'
 import { getDisplayColor, getDisplayStatus, DISPLAY_LABELS } from '../data/statusColors'
-import { TERRITORY_DISPLAY_NAMES } from '../data/territories'
+import { getTerritoryLabel } from '../data/territories'
 
 /** Parse metadata: key:value;key:value (; separates pairs so commas in values are safe). Also supports | for merged segments. */
 function parseMetadata(metadata?: string): Array<{ key: string; value: string }> {
@@ -133,7 +133,7 @@ export function TerritoryModal({ territory, open, onOpenChange }: TerritoryModal
         >
           <Dialog.Title className="text-lg font-semibold text-gray-900">
             {territory.areas.length > 1
-              ? (TERRITORY_DISPLAY_NAMES[territory.id] ?? `Territory ${territory.id}`)
+              ? getTerritoryLabel(territory.id)
               : territory.areas[0]?.name ?? territory.id}
           </Dialog.Title>
         </div>

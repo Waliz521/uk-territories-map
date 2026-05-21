@@ -9,6 +9,7 @@ import {
   LAD_TO_HAMPSHIRE_TERRITORY,
   CLIENT_MESSAGE_RUSHMOR,
 } from './ladToHampshireTerritory'
+import { TERRITORY_TO_LADS } from './territoryToLads'
 
 /** Re-export for client communication */
 export { CLIENT_MESSAGE_RUSHMOR }
@@ -99,6 +100,11 @@ export const TERRITORY_DISPLAY_NAMES: Record<string, string> = {
   'hampshire-new-forest': 'New Forest',
 }
 
+/** Label for filter/modal: friendly name if known, otherwise use id as stored in admin */
+export function getTerritoryLabel(territoryId: string): string {
+  return TERRITORY_DISPLAY_NAMES[territoryId] ?? territoryId
+}
+
 /**
  * Build territory groups from area records
  * Default status is 'unavailable' - only whitelisted territories get available/reserved
@@ -159,7 +165,7 @@ export function getTerritoryFilterOptions(): { id: string; label: string }[] {
     })
     .map((id) => ({
       id,
-      label: TERRITORY_DISPLAY_NAMES[id] ?? `Territory ${id}`,
+      label: getTerritoryLabel(id),
     }))
 }
 
@@ -171,7 +177,7 @@ export function getTerritoryFilterOptionsFromGroups(
     .filter((g) => g.id && !g.id.startsWith('ungrouped-'))
     .map((g) => ({
       id: g.id,
-      label: TERRITORY_DISPLAY_NAMES[g.id] ?? `Territory ${g.id}`,
+      label: getTerritoryLabel(g.id),
     }))
     .sort((a, b) => {
       const numA = parseInt(a.id, 10)
@@ -197,17 +203,26 @@ export function buildAreaToTerritoryMap(
     }
   }
 
-  // 2. Hampshire split: LAD → territory (overrides county mapping). Skip when using API data –
+  // 2. Named territories → LAD polygons (API sub-areas like "Abington & Phippsville" do not match GeoJSON)
+  const groupById = new Map(groups.map((g) => [g.id, g]))
+  for (const [territoryId, ladKeys] of Object.entries(TERRITORY_TO_LADS)) {
+    const group = groupById.get(territoryId)
+    if (!group) continue
+    for (const ladKey of ladKeys) {
+      map.set(ladKey, group)
+    }
+  }
+
+  // 3. Hampshire split: LAD → territory (overrides county mapping). Skip when using API data –
   //    API already has correct territory per location; hardcoded map would override and cause bugs.
   if (!useApiData) {
-    const groupById = new Map(groups.map((g) => [g.id, g]))
     for (const [ladKey, territoryId] of Object.entries(LAD_TO_HAMPSHIRE_TERRITORY)) {
       const group = groupById.get(territoryId)
       if (group) map.set(ladKey, group)
     }
   }
 
-  // 3. County-level expansion: Excel has county names (e.g. Surrey, Derbyshire)
+  // 4. County-level expansion: Excel has county names (e.g. Surrey, Derbyshire)
   //    but GeoJSON has LAD names (e.g. Elmbridge, Amber Valley). Map each LAD
   //    to the territory of its parent county. (Hampshire excluded - handled above)
   const countyToGroup = new Map<string, TerritoryGroup>()
